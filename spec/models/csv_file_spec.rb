@@ -34,6 +34,10 @@ RSpec.describe CSVFile, type: :model do
 
     it "fills in location comparison_outcome" do
       expect(locations[0].comparison_outcome).to eq :item_ok
+      expect(locations[1].comparison_outcome).to eq :empty_empty
+      expect(locations.find { |location| location.location == "ZB001A" }.comparison_outcome).to eq :not_scanned
+      expect(locations.find { |location| location.location == "ZC002A" }.comparison_outcome).to eq :item_missing
+      expect(locations.find { |location| location.location == "ZC001B" }.comparison_outcome).to eq :empty_occupied
     end
 
     it "fills in location comparison_status" do
