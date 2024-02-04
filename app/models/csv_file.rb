@@ -23,7 +23,7 @@ class CSVFile < ApplicationRecord
     @category_count = Hash.new(0)
     locations.each do |location|
       location.report_location = report[location.location]
-      category_count[location.comparison_category] += 1
+      category_count[location.comparison_status] += 1
     end
   end
 end

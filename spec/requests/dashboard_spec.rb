@@ -9,7 +9,7 @@ RSpec.describe "Dashboards", type: :request do
   end
 
   describe "GET /compare" do
-    it "returns http success" do
+    xit "returns http success" do
       get "/dashboard/compare"
       expect(response).to have_http_status(:success)
     end

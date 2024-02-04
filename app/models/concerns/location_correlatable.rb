@@ -7,7 +7,7 @@ module LocationCorrelatable
     delegate :scanned, :occupied, :detected_barcodes, to: :report_location, allow_nil: true
   end
 
-  OUTCOME_CATEGORY = {
+  OUTCOME_CATEGORISED_STATUS = {
     not_found: :no_data,
     not_scanned: :no_data,
     item_unidentified: :no_data,
@@ -37,8 +37,8 @@ module LocationCorrelatable
     end
   end
 
-  def comparison_category
-    @comparison_category ||= OUTCOME_CATEGORY[comparison_outcome]
+  def comparison_status
+    @comparison_status ||= OUTCOME_CATEGORISED_STATUS[comparison_outcome]
   end
 
   def decorate

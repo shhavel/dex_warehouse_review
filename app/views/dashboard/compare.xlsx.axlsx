@@ -14,6 +14,6 @@ style = {
 wb.add_worksheet(name: "Locations") do |sheet|
   sheet.add_row(["Location Name", "Successfully Scanned", "Occupied", "Expected Barcodes", "Actual Barcodes", "Outcome"], style: head_style)
   @csv_file.locations.each do |location|
-    sheet.add_row(location.report_row, style: style[location.comparison_category])
+    sheet.add_row(location.report_row, style: style[location.comparison_status])
   end
 end

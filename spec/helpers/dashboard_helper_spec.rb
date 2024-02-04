@@ -11,5 +11,25 @@ require "rails_helper"
 #   end
 # end
 RSpec.describe DashboardHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#location_report_row_class" do
+    subject { helper.location_report_row_class(location) }
+
+    context "with location comparison_status :ok" do
+      let(:location) { double("Location", comparison_status: :ok) }
+
+      it { should eq "bg-green-50" }
+    end
+
+    context "with location comparison_status :no_data" do
+      let(:location) { double("Location", comparison_status: :no_data) }
+
+      it { should eq "bg-yellow-50" }
+    end
+
+    context "with location comparison_status :ok" do
+      let(:location) { double("Location", comparison_status: :discrepancy) }
+
+      it { should eq "bg-red-50" }
+    end
+  end
 end
