@@ -1,14 +1,8 @@
 <div class="container mx-auto mt-8 w-full">
-  <%= form_with url: "/dashboard/compare", method: :get, id: dom_id(CSVFile.new) do |form| %>
+  <%= form_with url: "/dashboard/compare", method: :get do |form| %>
     <div class="flex items-center space-x-4">
       <div class="w-1/2">
-
-        <div class="flex">
-          <label for="csv_file_id" class="block text-m font-medium text-gray-700 mr-4">CSV file</label>
-          <%= link_to "Upload new CSV file", new_csv_file_path, class: "text-blue-600" %>
-        </div>
-
-        <%= form.select :csv_file_id, options_for_select(@csv_files.map { |csv_file| [csv_file.name, csv_file.id] }, params[:csv_file_id]), {}, {class: "mt-1 block w-240 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"} %>
+        <%= render "csv_files/select", form:, csv_files: @csv_files %>
       </div>
 
       <div class="w-1/2">
@@ -17,13 +11,13 @@
       </div>
     </div>
 
-    <div class="items-center space-x-4 text-center mt-3">
-      <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">
+    <div class="items-center space-x-4 text-center mt-3" id="compare-button-container">
+      <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300" id="compare">
         Compare
       </button>
 
       <% if params[:action] == "compare" %>
-        <%= link_to "Download CSV Comparition Report", compare_path(**request.query_parameters, format: "csv"), class: "text-blue-600" %>
+        <%= link_to "Download .csv", compare_path(**request.query_parameters, format: "csv"), class: "text-blue-600" %>
       <% end %>
     </div>
   <% end %>

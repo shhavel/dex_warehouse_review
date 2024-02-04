@@ -66,6 +66,6 @@ class RobotReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def robot_report_params
-    params.require(:robot_report).permit(:name, :file)
+    params.require(:robot_report).permit(:file)
   end
 end

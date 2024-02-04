@@ -10,13 +10,14 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="my-5">
-    <%= form.label :file %>
-    <%= form.file_field :file, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", accept: ".csv" %>
+  <div class="flex">
+    <label for="csv_file_id" class="block text-m font-medium text-gray-700 mr-4">CSV file</label>
+    <%= link_to "Cancel", csv_files_path, class: "text-blue-600" %>
   </div>
 
-  <div class="inline">
-    <%= form.submit "Upload CSV file", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  <div class="flex">
+    <%= form.file_field :file, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-1 mt-1", accept: ".csv" %>
+
+    <%= form.submit "Upload CSV", class: "rounded-md ml-2 px-2 bg-blue-500 text-white  font-small cursor-pointer hover:bg-blue-600" %>
   </div>
 <% end %>

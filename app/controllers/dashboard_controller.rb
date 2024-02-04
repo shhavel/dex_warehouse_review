@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   before_action do
-    @csv_files = CSVFile.order(id: :desc).to_a
-    @robot_reports = RobotReport.order(id: :desc).to_a
+    @csv_files = CSVFile.order(id: :desc)
+    @robot_reports = RobotReport.order(id: :desc)
   end
 
   def index

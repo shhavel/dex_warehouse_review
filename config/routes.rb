@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "dashboard/index"
   get "dashboard/compare", as: :compare
-  resources :csv_files
+  resources :csv_files, only: %i[index new create]
   resources :robot_reports
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

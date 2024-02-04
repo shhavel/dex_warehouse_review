@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "choose_csv_file" do %>
+  <div class="flex">
+    <label for="csv_file_id" class="block text-m font-medium text-gray-700 mr-4">CSV file</label>
+    <%= link_to "Upload new CSV file", new_csv_file_path, class: "text-blue-600" %>
+  </div>
+
+  <%= form.select :csv_file_id, options_for_select(csv_files.map { |csv_file| [csv_file.name, csv_file.id] }, params[:csv_file_id]), {}, {class: "mt-1 block w-240 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"} %>
+
+  <script type="application/javascript">
+    document.getElementById("compare-button-container").setAttribute("class", "items-center space-x-4 text-center mt-3 visible");
+  </script>
+<% end %>
