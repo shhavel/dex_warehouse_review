@@ -1,0 +1,64 @@
+<div class="container mx-auto mt-3">
+  <table class="min-w-full divide-y divide-gray-200 my-6">
+    <thead>
+      <tr>
+        <th class="px-6 py-4 bg-gray-50 text-center text-xs font-large text-gray-500 uppercase tracking-wider">✅ OK</th>
+        <th class="px-6 py-4 bg-gray-50 text-center text-xs font-large text-gray-500 uppercase tracking-wider">🚧 Warning</th>
+        <th class="px-6 py-4 bg-gray-50 text-center text-xs font-large text-gray-500 uppercase tracking-wider">🚨 Discrepancy</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr>
+        <td class="px-12 py-3 whitespace-nowrap text-center bg-green-50">
+          <%= csv_file.category_count[:ok] %>
+          <div class="relative inline-block">
+            <span class="tooltip">
+              <span class="tooltip-text">The number of successfully scanned <br>locations where the CSV file <br>data matches the robot report.</span>
+              <span class="circle text-white bg-blue-400 flex items-center justify-center h-4 w-4 rounded-full cursor-pointer mx-1">?</span>
+            </span>
+          </div>
+        </td>
+        <td class="px-12 py-3 whitespace-nowrap text-center bg-yellow-50">
+          <%= @csv_file.category_count[:no_data] %>
+          <div class="relative inline-block">
+            <span class="tooltip">
+              <span class="tooltip-text">The number of locations that <br>were not scanned successfully, <br>as well as those for which the <br>barcode could not be identified.</span>
+              <span class="circle text-white bg-blue-400 flex items-center justify-center h-4 w-4 rounded-full cursor-pointer mx-1">?</span>
+            </span>
+          </div>
+        </td>
+        <td class="px-12 py-3 whitespace-nowrap text-center bg-red-50">
+          <%= @csv_file.category_count[:discrepancy] %>
+          <span class="tooltip">
+            <span class="tooltip-text">The number of locations where <br>a discrepancy was observed between <br>the CSV file and the robot report <br>(e.g. missing item, wrong item, occupied <br>location should have been empty).</span>
+            <span class="circle text-white bg-blue-400 flex items-center justify-center h-4 w-4 rounded-full cursor-pointer mx-1">?</span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead>
+      <tr>
+        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location Name</th>
+        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Successfully Scanned</th>
+        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Occupied</th>
+        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expected Barcodes</th>
+        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actual Barcodes</th>
+        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Outcome</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% csv_file.locations.each_with_index do |location, index| %>
+        <tr class="<%= location.severity.info? ? 'bg-green-50' : (location.severity.warning? ? 'bg-yellow-50' : 'bg-red-50' ) %>">
+          <td class="px-6 py-3 whitespace-nowrap"><%= location.location %></td>
+          <td class="px-6 py-3 whitespace-nowrap text-center"><%= location.scanned ? "👀" : "⚠️" %></td>
+          <td class="px-6 py-3 whitespace-nowrap text-center"><%= location.occupied ? "📦" : ("📭" unless location.occupied.nil?) %></td>
+          <td class="px-6 py-3 whitespace-nowrap"><%= location.item %></td>
+          <td class="px-6 py-3 whitespace-nowrap"><%= location.detected_barcodes&.join(', ') %></td>
+          <td class="px-6 py-3 whitespace-nowrap"><%= t("location_comparison_outcome.#{location.comparison_outcome}") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

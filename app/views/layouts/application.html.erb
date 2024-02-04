@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WarehouseReview</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <style>
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip-text {
+        visibility: hidden;
+        width: max-content;
+        background-color: #1a202c;
+        color: white;
+        text-align: center;
+        border-radius: 4px;
+        padding: 0.5rem;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px; /* Adjust this value based on your design */
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container mx-auto my-6">
+      <%= yield %>
+    </main>
+  </body>
+</html>
