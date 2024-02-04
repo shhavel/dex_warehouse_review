@@ -5,15 +5,21 @@ class RobotReport < ApplicationRecord
 
   ReportLocation = Struct.new("ReportLocation", :name, :scanned, :occupied, :detected_barcodes, keyword_init: true)
 
-  def locations
-    JSON.parse(file.download, symbolize_names: true).map { |row| ReportLocation.new(row) }
+  def name
+    "#{created_at.to_date.inspect} #{file.blob.filename}"
   end
 
   def report
     @report ||= locations.index_by(&:name)
   end
 
-  def name
-    "#{created_at.to_date.inspect} #{file.blob.filename}"
+  private
+
+  def parsed_data
+    JSON.parse(file.download, symbolize_names: true)
+  end
+
+  def locations
+    parsed_data.map { |row| ReportLocation.new(row) }
   end
 end

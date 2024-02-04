@@ -11,10 +11,6 @@ class CSVFile < ApplicationRecord
     "#{created_at.to_date.inspect} #{file.blob.filename}"
   end
 
-  def rows
-    CSV.parse(file.download, headers: true, header_converters: proc { |h| h.downcase.to_sym })
-  end
-
   def locations
     @locations ||= rows.map { |row| Location.new(row.to_h).decorate }
   end
@@ -25,5 +21,11 @@ class CSVFile < ApplicationRecord
       location.report_location = report[location.location]
       category_count[location.comparison_status] += 1
     end
+  end
+
+  private
+
+  def rows
+    CSV.parse(file.download, headers: true, header_converters: proc { |h| h.downcase.to_sym })
   end
 end
