@@ -18,7 +18,36 @@
 
       <% if params[:action] == "compare" %>
         <%= link_to "Download .csv", compare_path(**request.query_parameters, format: "csv"), class: "text-blue-600" %>
+
+        <button id="copy-button" class="text-blue-600">Copy URL</button>
+        <span id="current-url" class="hidden"></span>
       <% end %>
     </div>
   <% end %>
 </div>
+
+<script type="application/javascript">
+  document.getElementById('current-url').innerText = window.location.href;
+
+  document.getElementById('copy-button').addEventListener('click', function() {
+    var currentUrl = document.getElementById('current-url');
+
+    // Create a temporary input element
+    var tempInput = document.createElement('input');
+    document.body.appendChild(tempInput);
+    tempInput.value = currentUrl.innerText;
+
+    // Select the text in the input element
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); /* For mobile devices */
+
+    // Copy the text to the clipboard
+    document.execCommand('copy');
+
+    // Remove the temporary input element
+    document.body.removeChild(tempInput);
+
+    // Alert or provide feedback that the URL has been copied
+    alert('URL copied to clipboard: ' + currentUrl.innerText);
+  });
+</script>
