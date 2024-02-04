@@ -14,13 +14,6 @@ style = {
 wb.add_worksheet(name: "Locations") do |sheet|
   sheet.add_row(["Location Name", "Successfully Scanned", "Occupied", "Expected Barcodes", "Actual Barcodes", "Outcome"], style: head_style)
   @csv_file.locations.each do |location|
-    sheet.add_row([
-      location.location,
-      location.scanned ? "👀" : "⚠️",
-      location.occupied ? "📦" : ("📭" unless location.occupied.nil?),
-      location.item,
-      location.detected_barcodes&.join(', '),
-      t("location_comparison_outcome.#{location.comparison_outcome}")
-    ], style: style[location.category])
+    sheet.add_row(location.report_row, style: style[location.comparison_category])
   end
 end

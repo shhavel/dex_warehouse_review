@@ -16,14 +16,14 @@ class CSVFile < ApplicationRecord
   end
 
   def locations
-    @locations ||= rows.map { |row| Location.new(row.to_h) }
+    @locations ||= rows.map { |row| Location.new(row.to_h).decorate }
   end
 
   def compare_with(report)
     @category_count = Hash.new(0)
     locations.each do |location|
       location.report_location = report[location.location]
-      category_count[location.category] += 1
+      category_count[location.comparison_category] += 1
     end
   end
 end

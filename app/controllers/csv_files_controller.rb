@@ -1,7 +1,7 @@
 class CSVFilesController < ApplicationController
-  layout :false
+  layout false
 
-  # GET /csv_files or /csv_files.json
+  # GET /csv_files
   def index
     @csv_files = CSVFile.order(id: :desc)
   end
@@ -11,7 +11,7 @@ class CSVFilesController < ApplicationController
     @csv_file = CSVFile.new
   end
 
-  # POST /csv_files or /csv_files.json
+  # POST /csv_files
   def create
     @csv_file = CSVFile.new(csv_file_params)
 

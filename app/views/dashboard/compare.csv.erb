@@ -3,12 +3,5 @@
 
 <%= CSV.generate_line(["Location Name", "Successfully Scanned", "Occupied", "Expected Barcodes", "Actual Barcodes", "Outcome"]) -%>
 <%- @csv_file.locations.each do |location| -%>
-<%== CSV.generate_line([
-  location.location,
-  location.scanned ? "👀" : "⚠️",
-  location.occupied ? "📦" : ("📭" unless location.occupied.nil?),
-  location.item,
-  location.detected_barcodes&.join(', '),
-  t("location_comparison_outcome.#{location.comparison_outcome}")
-]) -%>
+<%== CSV.generate_line(location.report_row) -%>
 <%- end -%>

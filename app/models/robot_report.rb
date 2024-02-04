@@ -3,10 +3,10 @@
 class RobotReport < ApplicationRecord
   has_one_attached :file, dependent: :destroy
 
-  Location = Struct.new("ReportLocation", :name, :scanned, :occupied, :detected_barcodes, keyword_init: true)
+  ReportLocation = Struct.new("ReportLocation", :name, :scanned, :occupied, :detected_barcodes, keyword_init: true)
 
   def locations
-    JSON.parse(file.download, symbolize_names: true).map { |row| Location.new(row) }
+    JSON.parse(file.download, symbolize_names: true).map { |row| ReportLocation.new(row) }
   end
 
   def report
