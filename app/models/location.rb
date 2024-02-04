@@ -3,16 +3,16 @@
 Location = Struct.new("Location", :location, :item, :report_location, keyword_init: true) do
   delegate :scanned, :occupied, :detected_barcodes, to: :report_location, allow_nil: true
 
-  const_set(:OUTCOME_CATEGORY, {
+  OUTCOME_CATEGORY = {
     not_found: :no_data,
     not_scanned: :no_data,
     item_unidentified: :no_data,
     empty_empty: :ok,
     item_ok: :ok
-  }.tap { |h| h.default = :discrepancy }.freeze)
-  const_set(:CATEGORY_SEVERITY, {ok: "info", no_data: "warning", discrepancy: "error"}.transform_values do |str|
+  }.tap { |h| h.default = :discrepancy }.freeze
+  CATEGORY_SEVERITY = {ok: "info", no_data: "warning", discrepancy: "error"}.transform_values do |str|
     ActiveSupport::StringInquirer.new(str)
-  end.freeze)
+  end.freeze
 
   def comparison_outcome
     @comparison_outcome ||= if report_location.nil?

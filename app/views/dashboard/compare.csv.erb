@@ -2,7 +2,7 @@
 <%= CSV.generate_line(@csv_file.category_count.values_at(:ok, :no_data, :discrepancy)) -%>
 
 <%= CSV.generate_line(["Location Name", "Successfully Scanned", "Occupied", "Expected Barcodes", "Actual Barcodes", "Outcome"]) -%>
-<%- @csv_file.locations.each_with_index do |location, index| -%>
+<%- @csv_file.locations.each do |location| -%>
 <%== CSV.generate_line([
   location.location,
   location.scanned ? "👀" : "⚠️",

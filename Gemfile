@@ -66,3 +66,6 @@ gem "tailwindcss-rails", "~> 2.3"
 gem "oj", "~> 3.16"
 
 gem "standard", "~> 1.33"
+
+gem "caxlsx", "~> 4.0"
+gem "caxlsx_rails", "~> 0.6.3"

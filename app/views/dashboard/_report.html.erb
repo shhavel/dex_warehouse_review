@@ -49,7 +49,7 @@
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
-      <% csv_file.locations.each_with_index do |location, index| %>
+      <% csv_file.locations.each do |location| %>
         <tr class="<%= location.severity.info? ? 'bg-green-50' : (location.severity.warning? ? 'bg-yellow-50' : 'bg-red-50' ) %>">
           <td class="px-6 py-3 whitespace-nowrap"><%= location.location %></td>
           <td class="px-6 py-3 whitespace-nowrap text-center"><%= location.scanned ? "👀" : "⚠️" %></td>

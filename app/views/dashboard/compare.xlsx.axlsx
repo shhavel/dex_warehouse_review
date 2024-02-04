@@ -1,0 +1,26 @@
+wb = xlsx_package.workbook
+head_style = wb.styles.add_style(bg_color: "DDDDDD", b: true)
+wb.add_worksheet(name: "Summary") do |sheet|
+  sheet.add_row(["✅ OK", "🚧 Warning", "🚨 Discrepancy"], style: head_style)
+  sheet.add_row(@csv_file.category_count.values_at(:ok, :no_data, :discrepancy))
+end
+
+style = {
+  ok: wb.styles.add_style(bg_color: "F0FDF4"),
+  no_data: wb.styles.add_style(bg_color: "FEFCE8"),
+  discrepancy: wb.styles.add_style(bg_color: "FEF2F2")
+}.freeze
+
+wb.add_worksheet(name: "Locations") do |sheet|
+  sheet.add_row(["Location Name", "Successfully Scanned", "Occupied", "Expected Barcodes", "Actual Barcodes", "Outcome"], style: head_style)
+  @csv_file.locations.each do |location|
+    sheet.add_row([
+      location.location,
+      location.scanned ? "👀" : "⚠️",
+      location.occupied ? "📦" : ("📭" unless location.occupied.nil?),
+      location.item,
+      location.detected_barcodes&.join(', '),
+      t("location_comparison_outcome.#{location.comparison_outcome}")
+    ], style: style[location.category])
+  end
+end
