@@ -1,4 +1,6 @@
 class RobotReportsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   # GET /robot_reports or /robot_reports.json
   def index
     @robot_reports = RobotReport.all
@@ -16,7 +18,11 @@ class RobotReportsController < ApplicationController
 
   # POST /robot_reports or /robot_reports.json
   def create
-    @robot_report = RobotReport.new(robot_report_params)
+    @robot_report = if request.format.json?
+      RobotReport.new(file: {io: StringIO.new(request.raw_post), filename: "#{Date.today}_report.json"})
+    else
+      RobotReport.new(robot_report_params)
+    end
 
     respond_to do |format|
       if @robot_report.save

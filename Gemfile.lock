@@ -353,6 +353,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.4)
   importmap-rails
   jbuilder
+  mini_mime (~> 1.1)
   oj (~> 3.16)
   pg (~> 1.1)
   pry-byebug

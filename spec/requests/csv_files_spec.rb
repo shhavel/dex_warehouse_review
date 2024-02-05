@@ -59,8 +59,8 @@ RSpec.describe "/csv_files", type: :request do
 
         it "does not create a new CSVFile" do
           expect {
-          post csv_files_url, params: {csv_file: invalid_attributes}
-        }.to change(CSVFile, :count).by(0)
+            post csv_files_url, params: {csv_file: invalid_attributes}
+          }.to change(CSVFile, :count).by(0)
         end
 
         it "renders a response with 422 status (i.e. to display the 'new' template)" do
