@@ -9,8 +9,8 @@ RSpec.describe "Dashboards", type: :request do
   end
 
   describe "GET /compare" do
-    let(:csv_file) { create(:csv_file, created_at: DateTime.parse("2024-02-04 23:14:06 UTC")) }
-    let(:robot_report) { create(:robot_report, created_at: DateTime.parse("2024-02-04 23:14:06 UTC")) }
+    let(:csv_file) { create(:csv_file) }
+    let(:robot_report) { create(:robot_report) }
 
     it "returns http success" do
       get "/dashboard/compare", params: {csv_file_id: csv_file.id, robot_report_id: robot_report.id}
