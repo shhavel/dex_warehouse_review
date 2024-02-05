@@ -63,7 +63,7 @@ RSpec.describe "/robot_reports", type: :request do
     end
 
     context "with invalid parameters" do
-      context "without file" do
+      context "without a file" do
         let(:invalid_attributes) { {} }
 
         it "does not create a new RobotReport" do
@@ -74,7 +74,7 @@ RSpec.describe "/robot_reports", type: :request do
 
         it "renders a response with 422 status (i.e. to display the 'new' template)" do
           post robot_reports_url, params: {robot_report: invalid_attributes}
-          expect(response).to have_http_status(:bad_request)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
 

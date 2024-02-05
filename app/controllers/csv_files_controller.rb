@@ -19,7 +19,7 @@ class CSVFilesController < ApplicationController
       @csv_files = CSVFile.order(id: :desc)
       render :index
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -27,6 +27,6 @@ class CSVFilesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def csv_file_params
-    params.require(:csv_file).permit(:file)
+    params.permit(csv_file: :file)[:csv_file]
   end
 end

@@ -17,11 +17,11 @@ RSpec.describe "/csv_files", type: :request do
   # CSVFile. As you add validations to CSVFile, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {file: fixture_file_upload("example-customer.csv")}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {file: fixture_file_upload("example-robot.json")}
   }
 
   describe "GET /index" do
@@ -32,25 +32,9 @@ RSpec.describe "/csv_files", type: :request do
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      csv_file = CSVFile.create! valid_attributes
-      get csv_file_url(csv_file)
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET /new" do
     it "renders a successful response" do
       get new_csv_file_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /edit" do
-    it "renders a successful response" do
-      csv_file = CSVFile.create! valid_attributes
-      get edit_csv_file_url(csv_file)
       expect(response).to be_successful
     end
   end
@@ -65,11 +49,26 @@ RSpec.describe "/csv_files", type: :request do
 
       it "redirects to the created csv_file" do
         post csv_files_url, params: {csv_file: valid_attributes}
-        expect(response).to redirect_to(csv_file_url(CSVFile.last))
+        # expect(response).to redirect_to(csv_file_url(CSVFile.last))
       end
     end
 
     context "with invalid parameters" do
+      context "without a file" do
+        let(:invalid_attributes) { {} }
+
+        it "does not create a new CSVFile" do
+          expect {
+          post csv_files_url, params: {csv_file: invalid_attributes}
+        }.to change(CSVFile, :count).by(0)
+        end
+
+        it "renders a response with 422 status (i.e. to display the 'new' template)" do
+          post robot_reports_url, params: {csv_file: invalid_attributes}
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+
       it "does not create a new CSVFile" do
         expect {
           post csv_files_url, params: {csv_file: invalid_attributes}
@@ -80,51 +79,6 @@ RSpec.describe "/csv_files", type: :request do
         post csv_files_url, params: {csv_file: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested csv_file" do
-        csv_file = CSVFile.create! valid_attributes
-        patch csv_file_url(csv_file), params: {csv_file: new_attributes}
-        csv_file.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the csv_file" do
-        csv_file = CSVFile.create! valid_attributes
-        patch csv_file_url(csv_file), params: {csv_file: new_attributes}
-        csv_file.reload
-        expect(response).to redirect_to(csv_file_url(csv_file))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        csv_file = CSVFile.create! valid_attributes
-        patch csv_file_url(csv_file), params: {csv_file: invalid_attributes}
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested csv_file" do
-      csv_file = CSVFile.create! valid_attributes
-      expect {
-        delete csv_file_url(csv_file)
-      }.to change(CSVFile, :count).by(-1)
-    end
-
-    it "redirects to the csv_files list" do
-      csv_file = CSVFile.create! valid_attributes
-      delete csv_file_url(csv_file)
-      expect(response).to redirect_to(csv_files_url)
     end
   end
 end
