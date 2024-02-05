@@ -17,10 +17,10 @@ RSpec.describe "/robot_reports", type: :request do
   # RobotReport. As you add validations to RobotReport, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {file: Rack::Test::UploadedFile.new("spec/fixtures/files/example-robot.json", "application/json")}
+    {file: fixture_file_upload("example-robot.json")}
   }
   let(:invalid_attributes) {
-    {file: Rack::Test::UploadedFile.new("spec/fixtures/files/example-customer.csv", "text/csv")}
+    {file: fixture_file_upload("example-customer.csv")}
   }
 
   describe "GET /index" do
