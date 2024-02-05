@@ -20,7 +20,7 @@ class LocationCorrelatableDecorator < SimpleDelegator
       occupied_emoji,
       item,
       detected_items,
-      I18n.t("location_comparison_outcome.#{comparison_outcome}")
+      I18n.t("location_status.#{status}")
     ]
   end
 end

@@ -14,20 +14,20 @@ RSpec.describe DashboardHelper, type: :helper do
   describe "#location_report_row_class" do
     subject { helper.location_report_row_class(location) }
 
-    context "with location comparison_status :ok" do
-      let(:location) { double("Location", comparison_status: :ok) }
+    context "with location category :ok" do
+      let(:location) { double("Location", category: :ok) }
 
       it { should eq "bg-green-50" }
     end
 
-    context "with location comparison_status :no_data" do
-      let(:location) { double("Location", comparison_status: :no_data) }
+    context "with location category :no_data" do
+      let(:location) { double("Location", category: :no_data) }
 
       it { should eq "bg-yellow-50" }
     end
 
-    context "with location comparison_status :ok" do
-      let(:location) { double("Location", comparison_status: :discrepancy) }
+    context "with location category :discrepancy" do
+      let(:location) { double("Location", category: :discrepancy) }
 
       it { should eq "bg-red-50" }
     end

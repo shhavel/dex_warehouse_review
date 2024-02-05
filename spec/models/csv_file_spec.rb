@@ -32,16 +32,16 @@ RSpec.describe CSVFile, type: :model do
       expect(locations[0].detected_barcodes).to eq ["DX9850004338"]
     end
 
-    it "fills in location comparison_outcome" do
-      expect(locations[0].comparison_outcome).to eq :item_ok
-      expect(locations[1].comparison_outcome).to eq :empty_empty
-      expect(locations.find { |location| location.location == "ZB001A" }.comparison_outcome).to eq :not_scanned
-      expect(locations.find { |location| location.location == "ZC002A" }.comparison_outcome).to eq :item_missing
-      expect(locations.find { |location| location.location == "ZC001B" }.comparison_outcome).to eq :empty_occupied
+    it "fills in location outcome status" do
+      expect(locations[0].status).to eq :item_ok
+      expect(locations[1].status).to eq :empty_empty
+      expect(locations.find { |location| location.location == "ZB001A" }.status).to eq :not_scanned
+      expect(locations.find { |location| location.location == "ZC002A" }.status).to eq :item_missing
+      expect(locations.find { |location| location.location == "ZC001B" }.status).to eq :empty_occupied
     end
 
-    it "fills in location comparison_status" do
-      expect(locations[0].comparison_status).to eq :ok
+    it "fills in location category" do
+      expect(locations[0].category).to eq :ok
     end
 
     it "adds decorated data" do

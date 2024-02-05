@@ -8,6 +8,6 @@ module DashboardHelper
   }.freeze
 
   def location_report_row_class(location)
-    LOCATION_REPORT_ROW_CLASS[location.comparison_status]
+    LOCATION_REPORT_ROW_CLASS[location.category]
   end
 end
