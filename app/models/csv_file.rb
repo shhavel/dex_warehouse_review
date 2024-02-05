@@ -4,6 +4,7 @@ require "csv"
 
 class CSVFile < ApplicationRecord
   has_one_attached :file, dependent: :destroy
+  validates :file, presence: true, blob: {content_type: ["text/csv"]}
 
   attr_reader :category_count
 

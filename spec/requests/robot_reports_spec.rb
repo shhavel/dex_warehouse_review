@@ -17,24 +17,25 @@ RSpec.describe "/robot_reports", type: :request do
   # RobotReport. As you add validations to RobotReport, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {file: Rack::Test::UploadedFile.new("spec/fixtures/files/example-robot.json", "application/json")}
   }
-
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {file: Rack::Test::UploadedFile.new("spec/fixtures/files/example-customer.csv", "text/csv")}
   }
 
   describe "GET /index" do
+    let!(:robot_report) { create(:robot_report) }
+
     it "renders a successful response" do
-      RobotReport.create! valid_attributes
       get robot_reports_url
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
+    let(:robot_report) { create(:robot_report) }
+
     it "renders a successful response" do
-      robot_report = RobotReport.create! valid_attributes
       get robot_report_url(robot_report)
       expect(response).to be_successful
     end
@@ -43,14 +44,6 @@ RSpec.describe "/robot_reports", type: :request do
   describe "GET /new" do
     it "renders a successful response" do
       get new_robot_report_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /edit" do
-    it "renders a successful response" do
-      robot_report = RobotReport.create! valid_attributes
-      get edit_robot_report_url(robot_report)
       expect(response).to be_successful
     end
   end
@@ -70,6 +63,21 @@ RSpec.describe "/robot_reports", type: :request do
     end
 
     context "with invalid parameters" do
+      context "without file" do
+        let(:invalid_attributes) { {} }
+
+        it "does not create a new RobotReport" do
+          expect {
+            post robot_reports_url, params: {robot_report: invalid_attributes}
+          }.to change(RobotReport, :count).by(0)
+        end
+
+        it "renders a response with 422 status (i.e. to display the 'new' template)" do
+          post robot_reports_url, params: {robot_report: invalid_attributes}
+          expect(response).to have_http_status(:bad_request)
+        end
+      end
+
       it "does not create a new RobotReport" do
         expect {
           post robot_reports_url, params: {robot_report: invalid_attributes}
@@ -80,51 +88,6 @@ RSpec.describe "/robot_reports", type: :request do
         post robot_reports_url, params: {robot_report: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested robot_report" do
-        robot_report = RobotReport.create! valid_attributes
-        patch robot_report_url(robot_report), params: {robot_report: new_attributes}
-        robot_report.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the robot_report" do
-        robot_report = RobotReport.create! valid_attributes
-        patch robot_report_url(robot_report), params: {robot_report: new_attributes}
-        robot_report.reload
-        expect(response).to redirect_to(robot_report_url(robot_report))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        robot_report = RobotReport.create! valid_attributes
-        patch robot_report_url(robot_report), params: {robot_report: invalid_attributes}
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested robot_report" do
-      robot_report = RobotReport.create! valid_attributes
-      expect {
-        delete robot_report_url(robot_report)
-      }.to change(RobotReport, :count).by(-1)
-    end
-
-    it "redirects to the robot_reports list" do
-      robot_report = RobotReport.create! valid_attributes
-      delete robot_report_url(robot_report)
-      expect(response).to redirect_to(robot_reports_url)
     end
   end
 end

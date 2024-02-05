@@ -71,3 +71,5 @@ gem "standard", "~> 1.33"
 
 gem "caxlsx", "~> 4.0"
 gem "caxlsx_rails", "~> 0.6.3"
+
+gem "activestorage-validator", "~> 0.4.0"

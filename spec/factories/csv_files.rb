@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :csv_file do
-    file { Rack::Test::UploadedFile.new("spec/fixtures/files/example-customer.csv") }
+    file { Rack::Test::UploadedFile.new("spec/fixtures/files/example-customer.csv", "text/csv") }
   end
 end

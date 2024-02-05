@@ -2,6 +2,7 @@
 
 class RobotReport < ApplicationRecord
   has_one_attached :file, dependent: :destroy
+  validates :file, presence: true, blob: {content_type: ["application/json"]}
 
   ReportLocation = Struct.new("ReportLocation", :name, :scanned, :occupied, :detected_barcodes, keyword_init: true)
 
