@@ -18,7 +18,7 @@ class RobotReportsController < ApplicationController
 
   # POST /robot_reports or /robot_reports.json
   def create
-    @robot_report = if request.format.json?
+    @robot_report = if request.format.json? && !request.params.key?(:robot_report)
       RobotReport.new(file: {io: StringIO.new(request.raw_post), filename: "#{Date.today}_report.json"})
     else
       RobotReport.new(robot_report_params)
