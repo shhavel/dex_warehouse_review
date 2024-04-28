@@ -4,6 +4,10 @@ Rails app to generate a comparison report between warehouse locations CSV files 
 
 For code formatting use [standard](https://github.com/standardrb/standard).
 
+## Screen recording
+
+![alt text](SCREEN_RECORDING.gif "Title")
+
 ## App Setup
 
 ### System dependencies
