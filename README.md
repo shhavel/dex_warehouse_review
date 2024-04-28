@@ -6,7 +6,7 @@ For code formatting use [standard](https://github.com/standardrb/standard).
 
 ## Screen recording
 
-![alt text](SCREEN_RECORDING.gif "Title")
+![Screen recording](SCREEN_RECORDING.gif "Screen recording")
 
 ## App Setup
 
